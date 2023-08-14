@@ -14,6 +14,10 @@ jobs:
             ref: v3
             path: bbr
 
+        - name: Get current time
+          id: time
+          run: echo "time=$(date -u "+%Y-%m-%d-%H%M%S")" >> $GITHUB_OUTPUT
+
         - name: Setup dependencies
           run: |
             sudo apt-get update
@@ -35,5 +39,5 @@ jobs:
           with:
             artifacts: "linux-*"
             prerelease: true
-            
+            tag: ${{ steps.time.outputs.time }}
         
