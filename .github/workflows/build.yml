@@ -45,7 +45,7 @@ jobs:
             make olddefconfig
             make prepare
             # Build
-            nice make -j`nproc` deb-pkg V=1
+            nice make -j`nproc` bindeb-pkg
             
         - name: Release
           uses: ncipollo/release-action@v1
