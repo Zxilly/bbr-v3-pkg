@@ -17,7 +17,7 @@ jobs:
         - name: Setup dependencies
           run: |
             sudo apt-get update
-            sudo apt-fast install build-essential bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison debhelper
+            sudo apt-fast install -y build-essential bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison debhelper
         
         - name: Build
           working-directory: bbr
