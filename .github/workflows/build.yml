@@ -1,0 +1,39 @@
+name: Build Package
+
+on:
+  workflow_dispatch:
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+          with:
+            repository: google/bbr
+            ref: v3
+            path: bbr
+
+        - name: Setup dependencies
+          run: |
+            sudo apt-get update
+            sudo apt-fast install build-essential bc kmod cpio flex libncurses5-dev libelf-dev libssl-dev dwarves bison debhelper
+        
+        - name: Build
+          working-directory: bbr
+          run: |
+            # Download .config
+            curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > .config
+            # Setup
+            make olddefconfig
+            make prepare
+            # Build
+            nice make -j`nproc` deb-pkg
+            
+        - name: Release
+          uses: ncipollo/release-action@v1
+          with:
+            artifacts: "linux-*"
+            prerelease: true
+            
+        
