@@ -1,17 +1,18 @@
 # bbr-v3-deb
 
 Compile bbr-v3 kernel into deb format.
+
 编译 bbr-v3 内核为 deb 格式
 
 ## Installation
 
-从 `https://github.com/Zxilly/bbr-v3-deb/releases/latest` 下载 `linux-headers` 和 `linux-image`.
+从 `https://github.com/Zxilly/bbr-v3-deb/releases/latest` 下载 `linux-headers-*.deb` 和 `linux-image-*.deb`.
 
 `dpkg -i` 或 `apt install` 安装。
 
 ```bash
 # 设置 bbrv3
-echo 'net.ipv4.tcp_congestion_control=bbr1' | sudo tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
 # 查看当前的TCP流控算法
