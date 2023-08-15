@@ -30,7 +30,7 @@ jobs:
         
 
         - name: Setup ccache
-          uses: hendrikmuhs/ccache-action@v1.2
+          uses: hendrikmuhs/ccache-action@v1
           with:
             max-size: 1000M
 
@@ -39,13 +39,15 @@ jobs:
           run: |
             # Setup ccache
             export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+            # Manual set deb compression to xz
+            export KDEB_COMPRESS="xz"
             # Download .config
             curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > .config
             # Setup
             make olddefconfig
             make prepare
             # Build
-            nice make -j`nproc` bindeb-pkg
+            nice make -j`nproc` deb-pkg
             
         - name: Release
           uses: ncipollo/release-action@v1
