@@ -45,9 +45,8 @@ jobs:
             nice make \
               LOCALVERSION="" \
               CC="sccache gcc-13" \
-              HOSTCC="sccache gcc" \
               -j`nproc` \
-              bindeb-pkg binrpm-pkg
+              prepare bindeb-pkg binrpm-pkg
         
         - name: Upload config
           uses: actions/upload-artifact@v3
