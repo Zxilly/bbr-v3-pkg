@@ -41,12 +41,18 @@ jobs:
             export KDEB_COMPRESS="xz"
             # Download .config
             curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > .config
+            make prepare
             # Build
             nice make \
               LOCALVERSION="" \
               CC="sccache gcc-13" \
               -j`nproc` \
-              prepare bindeb-pkg binrpm-pkg
+              prepare bindeb-pkg
+            nice make \
+              LOCALVERSION="" \
+              CC="sccache gcc-13" \
+              -j`nproc` \
+              prepare binrpm-pkg
         
         - name: Upload config
           uses: actions/upload-artifact@v3
