@@ -3,6 +3,9 @@ name: Build Package
 on:
   workflow_dispatch:
 
+env:
+  SCCACHE_GHA_ENABLED: "true"
+
 jobs:
     build:
       runs-on: ubuntu-latest
@@ -25,30 +28,26 @@ jobs:
               bc kmod cpio flex libncurses5-dev \
               libelf-dev libssl-dev dwarves bison debhelper \
               gawk openssl libssl-dev dkms libudev-dev \
-              libpci-dev libiberty-dev autoconf llvm \
-              gcc-13 g++-13 rpm
+              libpci-dev libiberty-dev autoconf \
+              gcc-13 rpm
         
-
-        - name: Setup ccache
-          uses: hendrikmuhs/ccache-action@v1
-          with:
-            max-size: 1000M
-
+        - name: Setup sccache
+          uses: mozilla-actions/sccache-action@v0.0.3
+        
         - name: Build
           working-directory: bbr
           run: |
-            # Setup ccache
-            export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
             # Manual set deb compression to xz
             export KDEB_COMPRESS="xz"
             # Download .config
             curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > .config
-            # Setup
-            make olddefconfig
-            make prepare
             # Build
-            nice make LOCALVERSION="" -j`nproc` bindeb-pkg
-            nice make LOCALVERSION="" -j`nproc` binrpm-pkg
+            nice make \
+              LOCALVERSION="" \
+              CC="sccache gcc-13" \
+              HOSTCC="sccache gcc" \
+              -j`nproc` \
+              bindeb-pkg binrpm-pkg
         
         - name: Upload config
           uses: actions/upload-artifact@v3
@@ -59,7 +58,7 @@ jobs:
         - name: Release
           uses: ncipollo/release-action@v1
           with:
-            artifacts: "linux-*,rpmbuild/RPMS/*"
+            artifacts: "linux-*,/home/runner/rpmbuild/RPMS/*"
             prerelease: true
             tag: ${{ steps.time.outputs.time }}
         
