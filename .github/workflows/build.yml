@@ -63,7 +63,7 @@ jobs:
         - name: Release
           uses: ncipollo/release-action@v1
           with:
-            artifacts: "linux-*,/home/runner/rpmbuild/RPMS/x86_64/*
+            artifacts: "linux-*,/home/runner/rpmbuild/RPMS/x86_64/*"
             prerelease: true
             tag: ${{ steps.time.outputs.time }}
         
