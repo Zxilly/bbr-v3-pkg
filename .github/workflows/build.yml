@@ -26,7 +26,7 @@ jobs:
               libelf-dev libssl-dev dwarves bison debhelper \
               gawk openssl libssl-dev dkms libudev-dev \
               libpci-dev libiberty-dev autoconf llvm \
-              gcc-13 g++-13
+              gcc-13 g++-13 rpm
         
 
         - name: Setup ccache
@@ -47,12 +47,19 @@ jobs:
             make olddefconfig
             make prepare
             # Build
-            nice make LOCALVERSION="" -j`nproc` deb-pkg
-            
+            nice make LOCALVERSION="" -j`nproc` bindeb-pkg
+            nice make LOCALVERSION="" -j`nproc` binrpm-pkg
+        
+        - name: Upload config
+          uses: actions/upload-artifact@v3
+          with:
+            name: config
+            path: bbr/.config
+
         - name: Release
           uses: ncipollo/release-action@v1
           with:
-            artifacts: "linux-*"
+            artifacts: "linux-*,rpmbuild/RPMS/*"
             prerelease: true
             tag: ${{ steps.time.outputs.time }}
         
