@@ -1,6 +1,5 @@
-# bbr-v3-deb
-
-Compile bbr-v3 kernel into deb format.
+# bbr-v3-pkg
+Compile bbr-v3 kernel into deb/rpm format.
 
 编译支持 bbr-v3 的 linux 内核为 deb/rpm 格式。
 
