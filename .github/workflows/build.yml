@@ -5,6 +5,7 @@ on:
 
 env:
   SCCACHE_CACHE_SIZE: 5G
+  SCCACHE_DIR: ~/.cache/sccache
 
 jobs:
     build:
@@ -37,7 +38,7 @@ jobs:
         - name: Setup cache
           uses: actions/cache@v3
           with:
-            path: ~/.cache/sccache
+            path: ${{ env.SCCACHE_DIR }}
             key: sccache
         
         - name: Build
