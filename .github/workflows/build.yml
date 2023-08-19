@@ -2,6 +2,14 @@ name: Build Package
 
 on:
   workflow_dispatch:
+    inputs:
+      release:
+        type: choice
+        description: Release type
+        options:
+          - none
+          - pre-release
+          - release
 
 env:
   SCCACHE_CACHE_SIZE: 5G
@@ -66,11 +74,25 @@ jobs:
           with:
             name: config
             path: bbr/.config
+        
+        - name: Upload deb
+          uses: actions/upload-artifact@v3
+          with:
+            name: deb
+            path: linux-*.deb
+        
+        - name: Upload rpm
+          uses: actions/upload-artifact@v3
+          with:
+            name: rpm
+            path: /home/runner/rpmbuild/RPMS/x86_64/*.rpm
 
         - name: Release
+          if: ${{ github.event.inputs.release != 'none' }}
           uses: ncipollo/release-action@v1
           with:
             artifacts: "linux-*.deb,/home/runner/rpmbuild/RPMS/x86_64/*.rpm"
-            prerelease: true
+            prerelease: ${{ github.event.inputs.release == 'pre-release' }}
+            makeLatest: ${{ github.event.inputs.release == 'release' }}
             tag: ${{ steps.time.outputs.time }}
         
