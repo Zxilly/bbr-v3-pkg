@@ -13,7 +13,7 @@ on:
 
 env:
   SCCACHE_CACHE_SIZE: 5G
-  SCCACHE_DIR: ~/.cache/sccache
+  SCCACHE_DIR: /home/runner/.cache/sccache
 
 jobs:
     build:
@@ -43,10 +43,13 @@ jobs:
         - name: Setup sccache
           uses: mozilla-actions/sccache-action@v0.0.3
 
+        - name: Get .config
+          run: curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > bbr/.config
+
         - name: Setup cache
           uses: actions/cache@v3
           with:
-            path: ${{ env.SCCACHE_DIR }}
+            path: /home/runner/.cache/sccache
             key: sccache-${{ hashFiles('bbr/.config') }}
         
         - name: Build
@@ -54,8 +57,6 @@ jobs:
           run: |
             # Manual set deb compression to xz
             export KDEB_COMPRESS="xz"
-            # Download .config
-            curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > .config
             make prepare
             # Build
             nice make \
