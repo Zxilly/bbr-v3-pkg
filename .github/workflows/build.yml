@@ -39,7 +39,7 @@ jobs:
           uses: actions/cache@v3
           with:
             path: ${{ env.SCCACHE_DIR }}
-            key: sccache
+            key: sccache-${{ hashFiles('bbr/.config') }}
         
         - name: Build
           working-directory: bbr
@@ -54,12 +54,12 @@ jobs:
               LOCALVERSION="" \
               CC="sccache gcc-13" \
               -j`nproc` \
-              prepare bindeb-pkg
+              bindeb-pkg
             nice make \
               LOCALVERSION="" \
               CC="sccache gcc-13" \
               -j`nproc` \
-              prepare binrpm-pkg
+              binrpm-pkg
         
         - name: Upload config
           uses: actions/upload-artifact@v3
