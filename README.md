@@ -13,6 +13,11 @@ Compile bbr-v3 kernel into deb/rpm format.
 
 使用 rpm -i 或 dnf install 进行安装。
 
+
+## Configuration
+
+### Enable bbrv3
+
 ```bash
 # 设置 bbrv3
 echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.conf
