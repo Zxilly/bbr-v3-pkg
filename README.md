@@ -9,7 +9,7 @@ Compile bbr-v3 kernel into deb/rpm format.
 
 对于Debian/Ubuntu系统，使用 dpkg -i 或 apt install 进行安装。
 
-对于基于RPM的系统（如Fedora，CentOS，RHEL），请从同一链接下载 kernel-headers-*.rpm 和 kernel-*.rpm 文件。
+对于基于RPM的系统（如Fedora，CentOS，RHEL），请从同一链接下载 kernel-headers-\*.rpm 和 kernel-\*.rpm 文件。
 
 使用 rpm -i 或 dnf install 进行安装。
 
