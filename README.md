@@ -5,7 +5,7 @@ Compile bbr-v3 kernel into deb/rpm format.
 
 ## Installation
 
-从 `https://github.com/Zxilly/bbr-v3-deb/releases/latest` 下载 linux-headers-*.deb 和 linux-image-*.deb 文件。
+从 `https://github.com/Zxilly/bbr-v3-deb/releases/latest` 下载 linux-headers-\*.deb 和 linux-image-\*.deb 文件。
 
 对于Debian/Ubuntu系统，使用 dpkg -i 或 apt install 进行安装。
 
@@ -29,3 +29,5 @@ sysctl net.ipv4.tcp_congestion_control
 # 查看可用的TCP流控算法，以module形式被编译的算法将不会显示
 sysctl net.ipv4.tcp_available_congestion_control
 ```
+
+如果想启用 bbrv3，流控算法应设置为 `bbr`，如果想使用早期版本的 bbr，流控算法应设置为 `bbr1`。
