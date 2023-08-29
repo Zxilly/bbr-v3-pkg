@@ -65,6 +65,7 @@ jobs:
             make prepare
             # Build
             make \
+              LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
               -j`nproc` \
@@ -72,6 +73,7 @@ jobs:
             # reset version
             rm .version
             make \
+              LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
               -j`nproc` \
