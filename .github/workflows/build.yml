@@ -35,10 +35,10 @@ jobs:
             sudo apt-get update
             sudo apt-fast install -y build-essential \
               bc kmod cpio flex libncurses5-dev \
-              libelf-dev libssl-dev dwarves bison debhelper \
+              libelf-dev libssl-dev dwarves bison \
               gawk openssl libssl-dev dkms libudev-dev \
               libpci-dev libiberty-dev autoconf \
-              rpm
+              rpm debhelper
         
         - name: Install LLVM and Clang
           uses: KyleMayes/install-llvm-action@v1
@@ -63,7 +63,7 @@ jobs:
             # Manual set deb compression to xz
             export KDEB_COMPRESS="xz"
             make prepare
-            # Build
+            # Build deb
             make \
               LLVM=1 \
               LOCALVERSION="" \
@@ -72,12 +72,14 @@ jobs:
               bindeb-pkg
             # reset version
             rm .version
+            # Build rpm
             make \
               LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
+              RPMOPTS="--nodeps" \
               -j`nproc` \
-              binrpm-pkg
+              rpm-pkg
         
         - name: Upload config
           uses: actions/upload-artifact@v3
