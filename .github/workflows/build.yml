@@ -61,15 +61,20 @@ jobs:
           working-directory: bbr
           env:
             KBUILD_BUILD_TIMESTAMP: ''
+            KDEB_COMPRESS: "xz"
           run: |
-            # Manual set deb compression to xz
-            export KDEB_COMPRESS="xz"
-            make prepare
+            make \
+              LLVM=1 \
+              LOCALVERSION="" \
+              CC="sccache clang" \
+              HOSTCC="sccache clang" \
+              olddefconfig
             # Build deb
             make \
               LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
+              HOSTCC="sccache clang" \
               -j`nproc` \
               bindeb-pkg
             # reset version
@@ -79,6 +84,7 @@ jobs:
               LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
+              HOSTCC="sccache clang" \
               RPMOPTS="--nodeps" \
               -j`nproc` \
               rpm-pkg
