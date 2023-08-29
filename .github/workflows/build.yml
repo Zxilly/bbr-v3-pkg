@@ -59,6 +59,8 @@ jobs:
         
         - name: Build
           working-directory: bbr
+          env:
+            KBUILD_BUILD_TIMESTAMP: ''
           run: |
             # Manual set deb compression to xz
             export KDEB_COMPRESS="xz"
@@ -68,7 +70,7 @@ jobs:
               LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
-              -j16 \
+              -j`nproc` \
               bindeb-pkg
             # reset version
             rm .version
@@ -78,7 +80,7 @@ jobs:
               LOCALVERSION="" \
               CC="sccache clang" \
               RPMOPTS="--nodeps" \
-              -j16 \
+              -j`nproc` \
               rpm-pkg
         
         - name: Upload config
