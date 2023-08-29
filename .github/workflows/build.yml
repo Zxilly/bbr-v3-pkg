@@ -38,7 +38,12 @@ jobs:
               libelf-dev libssl-dev dwarves bison debhelper \
               gawk openssl libssl-dev dkms libudev-dev \
               libpci-dev libiberty-dev autoconf \
-              gcc-13 rpm
+              rpm
+        
+        - name: Install LLVM and Clang
+          uses: KyleMayes/install-llvm-action@v1
+          with:
+            version: "16.0.6"
         
         - name: Setup sccache
           uses: mozilla-actions/sccache-action@v0.0.3
@@ -50,7 +55,7 @@ jobs:
           uses: actions/cache@v3
           with:
             path: /home/runner/.cache/sccache
-            key: sccache-${{ hashFiles('bbr/.config') }}
+            key: sccache-${{ hashFiles('bbr/.config') }}-llvm
         
         - name: Build
           working-directory: bbr
@@ -59,14 +64,16 @@ jobs:
             export KDEB_COMPRESS="xz"
             make prepare
             # Build
-            nice make \
+            make \
               LOCALVERSION="" \
-              CC="sccache gcc-13" \
+              CC="sccache clang" \
               -j`nproc` \
               bindeb-pkg
-            nice make \
+            # reset version
+            rm .version
+            make \
               LOCALVERSION="" \
-              CC="sccache gcc-13" \
+              CC="sccache clang" \
               -j`nproc` \
               binrpm-pkg
         
