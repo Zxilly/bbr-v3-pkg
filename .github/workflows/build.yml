@@ -68,7 +68,7 @@ jobs:
               LLVM=1 \
               LOCALVERSION="" \
               CC="sccache clang" \
-              -j`nproc` \
+              -j16 \
               bindeb-pkg
             # reset version
             rm .version
@@ -78,7 +78,7 @@ jobs:
               LOCALVERSION="" \
               CC="sccache clang" \
               RPMOPTS="--nodeps" \
-              -j`nproc` \
+              -j16 \
               rpm-pkg
         
         - name: Upload config
