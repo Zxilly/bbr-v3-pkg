@@ -2,11 +2,11 @@
 
 [![Build Package](https://github.com/Zxilly/bbr-v3-pkg/actions/workflows/build.yml/badge.svg)](https://github.com/Zxilly/bbr-v3-pkg/actions/workflows/build.yml)
 
-Compile bbr-v3 kernel into deb/rpm format.
+For English, please see [README.EN.md](README.EN.md).
 
 编译支持 bbr-v3 的 linux 内核为 deb/rpm 格式。
 
-## Installation
+## 安装
 
 从 `https://github.com/Zxilly/bbr-v3-deb/releases/latest` 下载。
 
@@ -19,9 +19,9 @@ Compile bbr-v3 kernel into deb/rpm format.
 使用 rpm -i 或 dnf install 进行安装。
 
 
-## Configuration
+## 配置
 
-### Enable bbrv3
+### 启用 bbrv3
 
 ```bash
 # 设置 bbrv3
