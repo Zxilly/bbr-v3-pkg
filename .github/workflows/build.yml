@@ -43,7 +43,7 @@ jobs:
         - name: Install LLVM and Clang
           uses: KyleMayes/install-llvm-action@v1
           with:
-            version: "16"
+            version: "17"
         
         - name: Setup sccache
           uses: mozilla-actions/sccache-action@v0.0.3
