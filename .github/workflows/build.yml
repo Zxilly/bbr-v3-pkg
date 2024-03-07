@@ -40,16 +40,14 @@ jobs:
               libpci-dev libiberty-dev autoconf \
               rpm debhelper
         
-        - name: Install LLVM and Clang
-          uses: KyleMayes/install-llvm-action@v1
-          with:
-            version: "17"
+        - name: Set up Clang
+          uses: egor-tensin/setup-clang@v1
         
         - name: Setup sccache
-          uses: mozilla-actions/sccache-action@v0.0.3
+          uses: mozilla-actions/sccache-action@v0.0.4
 
         - name: Get .config
-          run: curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-deb/master/.config > bbr/.config
+          run: curl -sSL https://raw.githubusercontent.com/Zxilly/bbr-v3-pkg/master/.config > bbr/.config
 
         - name: Setup cache
           uses: actions/cache@v3
