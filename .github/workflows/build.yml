@@ -12,7 +12,7 @@ on:
           - release
 
 env:
-  SCCACHE_CACHE_SIZE: 5G
+  SCCACHE_CACHE_SIZE: 9G
   SCCACHE_DIR: /home/runner/.cache/sccache
 
 jobs:
@@ -62,14 +62,14 @@ jobs:
             KDEB_COMPRESS: "xz"
           run: |
             make \
-              LLVM=1 \
+              LLVM=-18 \
               LOCALVERSION="" \
               CC="sccache clang" \
               HOSTCC="sccache clang" \
               olddefconfig
             # Build deb
             make \
-              LLVM=1 \
+              LLVM=-18 \
               LOCALVERSION="" \
               CC="sccache clang" \
               HOSTCC="sccache clang" \
@@ -79,7 +79,7 @@ jobs:
             rm .version
             # Build rpm
             make \
-              LLVM=1 \
+              LLVM=-18 \
               LOCALVERSION="" \
               CC="sccache clang" \
               HOSTCC="sccache clang" \
