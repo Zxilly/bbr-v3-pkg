@@ -41,7 +41,7 @@ jobs:
               rpm debhelper
         
         - name: Set up Clang
-          run: bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+          run: sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
         
         - name: Setup sccache
           uses: mozilla-actions/sccache-action@v0.0.4
